@@ -15,7 +15,7 @@ import db from '../lib/database.js';
 import { getSetting, updateSetting, getChatData, updateChatData, getCommandData, updateCommandData } from '../lib/database.js';
 import { requireAdmin } from '../lib/adminCheck.js';
 import { channelInfo } from '../lib/messageConfig.js';
-import { autobioSettings, autoreadSettings, autorecordSettings, autotypingSettings, autorecordtypeSettings } from '../lib/case.js';
+import { autobioSettings, autoreadSettings, autorecordSettings, autotypingSettings, autorecordtypeSettings, autoemojiSettings } from '../lib/case.js';
 
 // __dirname replacement in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -2621,5 +2621,110 @@ Users with Warnings: ${warningCount}`;
 
     }
 
+},
+    {
+    name: 'autoemoji',
+    aliases: ['ae', 'emojiauto'],
+    category: 'owner',
+    description: 'Toggle automatic emoji replies',
+    usage: '.autoemoji [dm/group/all/off/list/add/remove/reset]',
+
+    async execute(sock, message, args, context) {
+        try {
+            const { senderIsSudo, reply } = context;
+            if (!senderIsSudo) {
+                return await reply('❌ This command is only for bot owners!');
+            }
+
+            if (!args || args.length < 2) {
+                const mode = autoemojiSettings.getMode();
+                const emojis = autoemojiSettings.getList();
+                return await reply(
+                    `😂🔥 AutoEmoji Settings 😂🔥\n\n` +
+                    `📌 Mode: ${mode}\n` +
+                    `📜 Emoji List: ${emojis.length ? emojis.join(', ') : '⚠️ Empty'}\n\n` +
+                    `👉 Usage:\n` +
+                    `.autoemoji dm|group|all|off\n` +
+                    `.autoemoji list\n` +
+                    `.autoemoji add 😂 😎\n` +
+                    `.autoemoji remove 😂\n` +
+                    `.autoemoji reset`
+                );
+            }
+
+            const action = args[1].toLowerCase();
+
+            switch (action) {
+                case 'dm':
+                case 'group':
+                case 'all':
+                    autoemojiSettings.enable(action);
+                    await reply(`✅ AutoEmoji enabled for ${action.toUpperCase()} chats.`);
+                    break;
+
+                case 'off':
+                case 'disable':
+                    autoemojiSettings.disable();
+                    await reply('❌ AutoEmoji disabled.');
+                    break;
+
+                case 'list': {
+                    const list = autoemojiSettings.getList();
+                    await reply(
+                        `📜 Current Emoji List:\n` +
+                        `${list.length ? list.join(', ') : '⚠️ No emojis set.'}`
+                    );
+                    break;
+                }
+
+                case 'add': {
+                    const toAdd = args.slice(2).join(' ').split(/[ ,]+/).filter(Boolean);
+                    if (!toAdd.length) return await reply('⚠️ Please provide emojis to add.');
+
+                    const current = autoemojiSettings.getList();
+                    const updated = [...new Set([...current, ...toAdd])];
+
+                    autoemojiSettings.setList(updated);
+                    await reply(
+                        `✅ Added emojis: ${toAdd.join(' ')}\n\n` +
+                        `📜 Updated List:\n${updated.join(', ')}`
+                    );
+                    break;
+                }
+
+                case 'remove': {
+                    const toRemove = args.slice(2);
+                    if (!toRemove.length) return await reply('⚠️ Please provide emojis to remove.');
+
+                    const current = autoemojiSettings.getList();
+                    const filtered = current.filter(e => !toRemove.includes(e));
+
+                    autoemojiSettings.setList(filtered);
+                    await reply(
+                        `🗑️ Removed emojis: ${toRemove.join(' ')}\n\n` +
+                        `📜 Updated List:\n${filtered.length ? filtered.join(', ') : '⚠️ Empty'}`
+                    );
+                    break;
+                }
+
+                case 'reset': {
+                    const list = autoemojiSettings.reset();
+                    await reply(
+                        `♻️ Emoji list has been reset!\n\n` +
+                        `📜 Default Emojis: ${list.join(' ')}`
+                    );
+                    break;
+                }
+
+                default:
+                    await reply('❌ Invalid option. Use: dm, group, all, off, list, add, remove, reset');
+                    break;
+            }
+
+        } catch (error) {
+            console.error('❌ Error in autoemoji command:', error);
+            await context.reply('⚠️ An error occurred while updating autoemoji settings.');
+        }
+    }
 }
     ];
