@@ -1,19 +1,19 @@
 {
   "settings": {
     "prefix": ".",
-    "mode": "public",
-    "version": "1.3.0",
+    "mode": "private",
+    "version": "1.2.0",
     "alwaysonline": false,
     "antibug": false,
     "anticall": false,
     "autotype": false,
-    "autoread": true,
+    "autoread": false,
     "autoreact": "off",
-    "autobio": true,
+    "autobio": false,
     "chatbot": false,
-    "fontstyle": "bold",
+    "fontstyle": "giftmd",
     "autoblock": false,
-    "autoemoji": "all",
+    "autoemoji": "off",
     "autorecord": false,
     "autoviewstatus": false,
     "autoreactstatus": false,
@@ -30,26 +30,16 @@
     "warnings": {},
     "warnLimit": 5,
     "timezone": "Africa/Nairobi",
-    "createdAt": 1758909416505,
-    "lastUpdated": 1759054779052,
-    "autoemojiList": [
-      "😂",
-      "🔥",
-      "❤️",
-      "😎",
-      "🥰",
-      "💯",
-      "🤖",
-      "✨",
-      "🙏"
-    ]
+    "createdAt": 0,
+    "lastUpdated": 0
+    
   },
   "chats": {},
   "users": {},
   "stats": {
     "totalCommands": 0,
     "totalMessages": 0,
-    "startTime": 1758909416505
+    "startTime": 0,
   },
   "commandData": {
     "welcome": {},
