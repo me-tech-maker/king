@@ -307,11 +307,11 @@ async function startXeonBotInc() {
   contextInfo: {
     externalAdReply: {
       title: "Join GIFT-MD Official Channel",
-      body: "Tap below to view channel",
+      body: "Tap below to view channel👇😌👇",
       thumbnailUrl: "https://whatsapp.com/channel/0029VbBT5JR3LdQMA5ckyE3e", // optional image
       sourceUrl: "https://files.catbox.moe/cwrn41.jpg", // 🔴 your channel link
       mediaType: 1,
-      renderLargerThumbnail: true
+      renderLargerThumbnail: false
     }
   }
 });
