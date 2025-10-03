@@ -1067,6 +1067,7 @@ Note: Failed messages are usually due to users blocking the bot or privacy setti
     
   {
         name: 'cleartmp',
+        aliases: ['cleartemp'],
         description: 'Clear WhatsApp session and restart bot',
         usage: 'clearsession',
         category: 'system',
