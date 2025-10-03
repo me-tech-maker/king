@@ -1,3 +1,4 @@
+import { useSQLiteAuthState } from './lib/sqliteAuth.js';
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
@@ -16,7 +17,6 @@ import PhoneNumber from 'awesome-phonenumber';
 import { imageToWebp, videoToWebp, writeExifImg, writeExifVid } from './lib/exif.js';
 import { smsg, isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, sleep, reSize } from './lib/myfunc.js';
 import makeWASocket, {
-    useMultiFileAuthState, 
     DisconnectReason, 
     fetchLatestBaileysVersion,
     generateForwardMessageContent,
@@ -112,7 +112,7 @@ const question = (text) => {
 
 async function startXeonBotInc() {
     let { version, isLatest } = await fetchLatestBaileysVersion()
-    const { state, saveCreds } = await useMultiFileAuthState(`./session`)
+    const { state, saveCreds } = await useSQLiteAuthState('./data/session/auth.db', 'gift-md')
     const msgRetryCounterCache = new NodeCache()
 
     const XeonBotInc = makeWASocket({
@@ -224,7 +224,7 @@ async function startXeonBotInc() {
 
         if (option === '2') {
             // Check if session exists
-            const sessionExists = fs.existsSync('./session/creds.json')
+            const sessionExists = fs.existsSync('./data/session/auth.db')
             if (sessionExists) {
                 console.log(chalk.green('✅ Using existing session...'))
                 return // Skip pairing process
