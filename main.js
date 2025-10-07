@@ -9,7 +9,7 @@ import fs from 'fs';
 import { getSetting, getWelcome, getGoodbye, isWelcomeEnabled, isGoodbyeEnabled } from './lib/database.js';
 import { isSudo } from './lib/database.js';
 import isAdmin from './lib/isAdmin.js';
-import { incrementMessageCount, syncMode, resetUserCount } from './commands/topmembers.js';
+import { incrementMessageCount, syncMode, resetUserCount } from './plugins/SPECIAL.js';
 import { commands, aliases, loadCommands, categories } from './lib/executor.js';
 import { applyFontStyle } from './lib/database.js';
 import { channelInfo } from './lib/messageConfig.js';
