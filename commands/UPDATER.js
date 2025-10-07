@@ -116,10 +116,10 @@ export default [
 
                 // Copy updated files
                 await context.replyPlain('🔄 Replacing files while preserving your config...');
-
                 const sourcePath = path.join(extractPath, `${REPO_NAME}-${BRANCH}`);
                 const destinationPath = path.join(__dirname, '..');
-                
+                await context.replyPlain('🧹 Cleaning up old or unused files...');
+clearExtraFiles(sourcePath, destinationPath);
                 copyFolderSync(sourcePath, destinationPath);
 
                 // Save the latest commit hash
@@ -338,6 +338,37 @@ await context.replyPlain(
     }
     }
 ];
+
+function clearExtraFiles(repoPath, localPath) {
+    const preservedFiles = [
+        'settings.js',
+        'data',
+        'node_modules',
+        '.git',
+        'session',
+        'tmp'
+    ];
+
+    const repoItems = fs.readdirSync(repoPath);
+    const localItems = fs.readdirSync(localPath);
+
+    for (const item of localItems) {
+        const localItemPath = path.join(localPath, item);
+
+        // Skip preserved folders/files
+        if (preservedFiles.includes(item)) continue;
+
+        // If not present in repo → delete it
+        if (!repoItems.includes(item)) {
+            try {
+                fs.rmSync(localItemPath, { recursive: true, force: true });
+                console.log(`🧹 Removed obsolete item: ${item}`);
+            } catch (err) {
+                console.error(`Failed to delete ${item}:`, err);
+            }
+        }
+    }
+}
 
 // Improved directory copy function
 function copyFolderSync(source, target) {
