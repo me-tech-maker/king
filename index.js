@@ -1,4 +1,4 @@
-import { useSQLiteAuthState } from './lib/sqliteAuth.js';
+import { useSQLiteAuthState, clearSQLiteSession } from './lib/sqliteAuth.js';
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
@@ -324,7 +324,8 @@ async function startXeonBotInc() {
             let reason = new Boom(lastDisconnect?.error)?.output.statusCode
             if (reason === DisconnectReason.badSession) {
                 console.log(`Bad Session File, Please Delete Session and Scan Again`);
-                startXeonBotInc() 
+                clearSQLiteSession();
+            startXeonBotInc()
             } else if (reason === DisconnectReason.connectionClosed) {
                 console.log("Connection closed, reconnecting....");
                 startXeonBotInc();
@@ -336,9 +337,10 @@ async function startXeonBotInc() {
                 startXeonBotInc()
             } else if (reason === DisconnectReason.loggedOut) {
                 console.log(`Device Logged Out, Please Scan Again And Run.`);
-                startXeonBotInc()
+                clearSQLiteSession();
+            startXeonBotInc()
             } else if (reason === DisconnectReason.restartRequired) {
-                console.log("Restart Required, Restarting...");
+                console.log("Restarting...");
                 startXeonBotInc()
             } else if (reason === DisconnectReason.timedOut) {
                 console.log("Connection TimedOut, Reconnecting...");
