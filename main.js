@@ -17,7 +17,7 @@ import db from './lib/database.js';
 import {rainbow, pastel} from './lib/color.js';
 console.log('[GIFT-MD] initializing executor 🚀');
 loadCommands();
-
+//.......................................................................................................................................................//
 // === GLOBALS ===
 global.channelLid = '120363403001461';
 global.prefix = getSetting('prefix', settings.prefix);
