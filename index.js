@@ -324,7 +324,7 @@ async function startXeonBotInc() {
             let reason = new Boom(lastDisconnect?.error)?.output.statusCode
             if (reason === DisconnectReason.badSession) {
                 console.log(`Bad Session File, Please Delete Session and Scan Again`);
-                startXeonBotInc()
+                startXeonBotInc() 
             } else if (reason === DisconnectReason.connectionClosed) {
                 console.log("Connection closed, reconnecting....");
                 startXeonBotInc();
