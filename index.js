@@ -223,7 +223,7 @@ async function startXeonBotInc() {
             // Check if session exists
             const sessionExists = fs.existsSync('./data/session/auth.db')
             if (sessionExists) {
-                console.log(chalk.green('✅ Using existing session...'))
+                console.log(chalk.green('[GIFT-MD] ✅ Using existing Qslite session...'))
                 return // Skip pairing process
             } else {
                 console.log(chalk.bold.blue('⚠️  No existing session found, falling back to phone number input...'))
@@ -233,7 +233,7 @@ async function startXeonBotInc() {
         phoneNumber = await question(chalk.bgBlack(chalk.green('Please type your WhatsApp number\nFormat: 2348085046874 (without + or spaces) : ')))
     } else {
         // Non-Interactive Mode
-        console.log(chalk.cyan('[GIFT-MD] Using setting owner number'))
+        console.log(chalk.bold.cyan('[GIFT-MD] Using setting owner number'))
         phoneNumber = settings.ownerNumber || phoneNumber
     }
 
@@ -299,7 +299,7 @@ async function startXeonBotInc() {
 ╚═▣══════════▣╝
 ▣ Time: ${new Date().toLocaleString()}
 ▣ Status: Online and Ready!
-▣ Current prefix is: ${currentPrefix}
+▣ Current prefix is: [${currentPrefix}]
 ▣ ✅Do ur best to join below channel`,
   contextInfo: {
     externalAdReply: {
