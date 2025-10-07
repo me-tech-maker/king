@@ -344,9 +344,14 @@ function clearExtraFiles(repoPath, localPath) {
         'settings.js',
         'data',
         'node_modules',
-        '.git',
-        'session',
-        'tmp'
+        '.npm',
+        'tmp',
+        'package.json',
+        'package-lock.json',
+        'index.js',
+        'main.js',
+        'lib',
+        'commands',
     ];
 
     const repoItems = fs.readdirSync(repoPath);
