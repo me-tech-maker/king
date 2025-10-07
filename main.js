@@ -10,12 +10,12 @@ import { getSetting, getWelcome, getGoodbye, isWelcomeEnabled, isGoodbyeEnabled 
 import { isSudo } from './lib/database.js';
 import isAdmin from './lib/isAdmin.js';
 import { incrementMessageCount, syncMode, resetUserCount } from './commands/topmembers.js';
-import { commands, aliases, loadCommands, categories } from './commandHandler.js';
+import { commands, aliases, loadCommands, categories } from './lib/executor.js';
 import { applyFontStyle } from './lib/database.js';
 import { channelInfo } from './lib/messageConfig.js';
 import db from './lib/database.js';
 import {rainbow, pastel} from './lib/color.js';
-console.log('[GIFT-MD] connected to Loader 🚀');
+console.log('[GIFT-MD] initializing executor 🚀');
 loadCommands();
 
 // === GLOBALS ===
