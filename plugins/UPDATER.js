@@ -351,7 +351,7 @@ function clearExtraFiles(repoPath, localPath) {
         'index.js',
         'main.js',
         'lib',
-        'commands',
+        'plugins',
     ];
 
     const repoItems = fs.readdirSync(repoPath);
